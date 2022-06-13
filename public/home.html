@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+
+    <style>
+      html,
+      body {
+        height: 100vh;
+      }
+
+      .bg {
+        /* width: 100%; */
+        /* height: 100vh; */
+        /* display: flex; */
+        /* align-items: center; */
+        
+        background-size: 300% 300%;
+        background-image: linear-gradient(
+          -45deg,
+          #08208e 0%,
+          #04378f 20%,
+          #2b42a6 40%,
+          #04063c 60%,
+          #b6e5fc 100%
+        );
+        animation: AnimateBG 20s ease infinite;
+      }
+
+      @keyframes AnimateBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+    </style>
+    <title>Sistema de Recados | Home</title>
+  </head>
+  <body class="bg">
+    <header class="container-fluid ">
+      <div class="row d-flex">
+        <div id="tooltip" class="d-flex justify-content-between col-12 bg-dark p-2 h1 text-white"><h1>Message Sistem</h1><button  data-bs-toggle="tooltip"
+          data-bs-target="#tooltip"
+          data-bs-placement="left"
+          title="Log Out"onclick="logOut()" class="  btn-lg btn btn-primary d-flex "><span><i class="bi bi-box-arrow-left"></i></button></div>       
+      </div>
+    </header>
+
+    <main class="container w-100 shadow bg-light rounded-2">
+      <div class="row text-center">
+        <div class="col-12 h2">Your Messages</div>
+        <div class="col-12">
+          <table class="table bg-light">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- ModalEdit -->
+    <div
+      class="modal fade"
+      id="editModal"
+      tabindex="-1"
+      aria-labelledby="editModal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModal">Edit Message</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="editTitle"
+                    id="editTitle"
+                    required
+                  />
+                  <label for="editTitle">Title</label>
+                </div>
+                <div class="form-floating my-2">
+                  <input
+                    class="form-control"
+                    type="tetx"
+                    name="editdescription"
+                    id="editDescription"
+                  />
+                  <label for="editdescription">Description</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              id="saveEditMessageButton"
+              type="button"
+              onclick="saveEditMessage()"
+              class="btn btn-dark"
+            >
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button trigger modalAdd -->
+    <div id="tooltip2"><span data-bs-toggle="tooltip"
+      data-bs-target="#tooltip2"
+      data-bs-placement="left"
+      title="Add new message"><button
+      type="button"
+      class="btn-lg btn btn-primary rounded-5 m-2 position-fixed bottom-0 end-0"
+      data-bs-toggle="modal"
+      data-bs-target="#addModal"
+    >
+      +
+    </button></span>
+</div>
+   
+    <!-- ModalAdd -->
+    <div
+      class="modal fade"
+      id="addModal"
+      tabindex="-1"
+      aria-labelledby="addModal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addModal">Add New Message</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="title"
+                    id="title"
+                    placeholder="Title"
+                    required
+                  />
+                  <label for="name">Title</label>
+                </div>
+                <div class="form-floating my-2">
+                  <input
+                    class="form-control"
+                    type="tetx"
+                    name="description"
+                    id="description"
+                    placeholder="description"
+                  />
+                  <label for="name">Description</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              onclick="registerMessage()"
+              class="btn btn-dark"
+            >
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./js/home.js"></script>
+  </body>
+</html>
